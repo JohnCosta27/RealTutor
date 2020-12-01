@@ -15,13 +15,13 @@ app.use('/client', (req, res, next) => {
 const port = 8000;
 app.listen(port, () => console.log("Listening on port: " + port));
 
-const student = Router();
-app.use('/student', (req, res, next) => {
-    console.log("Student API: /student" + req.path);
+const students = express.Router();
+app.use('/students', (req, res, next) => {
+    console.log("Student API: /students" + req.path);
     next();
-}, student);
+}, students);
 
-student.post('/create', (req, res) => {
+students.post('/create', (req, res) => {
     try {
         
         let ps = db.prepare("INSERT INTO Students (firstname, surname, email, specID) VALUES (?, ?, ?, ?)");
@@ -36,7 +36,21 @@ student.post('/create', (req, res) => {
     }
 });
 
-const spec = Router();
+students.get('/readall', (req, res) => {
+    try {
+
+        let ps = db.prepare("SELECT * FROM students");
+        let results = ps.all();
+
+        res.json(results);
+
+    } catch (error) {
+        console.log("An error occured: " + error);
+        res.json("An error occured: " + error);   
+    }
+});
+
+const spec = express.Router();
 app.use('/spec', (req, res, next) => {
     console.log("Specification API: /spec" + req.path);
     next();
@@ -46,7 +60,7 @@ spec.post('/create', (req, res) => {
     try {
         
         let ps = db.prepare("INSERT INTO specification (coursename, examboard) VALUES (?, ?)");
-        ps.run(req.fields['coursename'], req.fields['examboard']);
+        let results = ps.run(req.fields['coursename'], req.fields['examboard']);
 
         if (results.changes === 1) res.json({status: "OK"});
         else throw "Unable to create new specification";
@@ -57,7 +71,21 @@ spec.post('/create', (req, res) => {
     }
 });
 
-const specpoints = Router();
+spec.get('/readall', (req, res) => {
+    try {
+
+        let ps = db.prepare("SELECT * FROM specification");
+        let results = ps.all();
+
+        res.json(results);
+
+    } catch (error) {
+        console.log("An error occured: " + error);
+        res.json("An error occured: " + error);   
+    }
+});
+
+const specpoints = express.Router();
 app.use('/specpoints', (req, res, next) => {
     console.log("Spec Points API: /specpoints" + req.path);
     next();
@@ -67,7 +95,7 @@ specpoints.post('/create', (req, res) => {
     try {
         
         let ps = db.prepare("INSERT INTO specpoints (specID, title, content) VALUES (?, ?, ?)");
-        ps.run(req.fields['specID'], req.fields['title'], req.fields['content']);
+        let results = ps.run(req.fields['specID'], req.fields['title'], req.fields['content']);
 
         if (results.changes === 1) res.json({status: "OK"});
         else throw "Unable to create new specification point";
@@ -78,7 +106,7 @@ specpoints.post('/create', (req, res) => {
     }
 });
 
-const knownspecpoints = Router();
+const knownspecpoints = express.Router();
 app.use('/knownspecpoints', (req, res, next) => {
     console.log("Known Spec Points API: /knownspecpoints" + req.path);
     next();
@@ -88,7 +116,7 @@ knownspecpoints.post('/create', (req, res) => {
     try {
         
         let ps = db.prepare("INSERT INTO knownspecpoints (studentID, pointID, datetime) VALUES (?, ?, ?)");
-        ps.run(req.fields['specID'], req.fields['title'], new Date().getTime());
+        let results = ps.run(req.fields['specID'], req.fields['title'], new Date().getTime());
 
         if (results.changes === 1) res.json({status: "OK"});
         else throw "Unable to create new known specification point";
