@@ -1,0 +1,135 @@
+1.1.1 Structure and function of the processor
+
+- The Arithmetic and Logic Unit; ALU, Control Unit and Registers; Program Counter; PC, Accumulator; ACC, Memory Address Register; MAR, Memory Data Register; MDR, Current Instruction Register; CIR. Buses: data, address and control: how this relates to assembly language programs.
+- The Fetch-Decode-Execute Cycle; including its effects on registers.
+- The factors affecting the performance of the CPU: clock speed, number of cores, cache.
+- The use of pipelining in a processor to improve efficiency.
+- Von Neumann, Harvard and contemporary processor architecture.
+
+1.1.2 Types of processor
+
+- The differences between and uses of CISC and RISC processors.
+- GPUs and their uses including those not related to graphics.
+- Multicore and Parallel systems.
+
+1.1.3 Input, output and storage 
+
+- How different input, output and storage devices can be applied to the solution of different problems.
+- The uses of magnetic, flash and optical storage devices.
+- RAM and ROM.
+- Virtual storage.
+
+1.2.1 Systems Software 
+
+- The need for, function and purpose of operating systems.
+- Memory Management paging, segmentation and virtual memory.
+- Interrupts, the role of interrupts and Interrupt Service Routines -, role within the Fetch-Decode-Execute Cycle.
+- Scheduling: round robin, first come first served, multi-level feedback queues, shortest job first and shortest remaining time.
+- Distributed, embedded, multi-tasking, multi-user and Real Time operating systems.
+- BIOS.
+- Device drivers.
+- Virtual machines, any instance where software is used to take on the function of a machine, including executing intermediate code or running an operating system within another.
+
+1.2.2 Applications Generation 
+
+- The nature of applications, justifying suitable applications for a specific purpose.
+- Utilities.
+- Open source vs closed source.
+- Translators:Interpreters, compilers and assemblers.
+- Stages of compilation lexical analysis, syntax analysis, code generation and optimisation.
+- Linkers and loaders and use of libraries.
+
+1.2.3 Software Development 
+
+- Understand the waterfall lifecycle, agile methodologies, extreme programming, the spiral model and rapid application development.
+- The relative merits and drawbacks of different methodologies and when they might be used.
+- Writing and following algorithms.
+
+1.2.4 Types of Programming Language 
+
+- Need for and characteristics of a variety of programming paradigms.
+- Procedural languages.
+- Assembly language [including following and writing simple programs with the Little Man Computer instruction set].
+- Modes of addressing memory [immediate, direct, indirect and indexed].
+- Object-oriented languages with an understanding of classes, objects, methods, attributes, inheritance, encapsulation and polymorphism.
+
+1.3.1 Compression, Encryption and Hashing 
+
+- Lossy vs Lossless compression.
+- Run length encoding and dictionary coding for lossless compression.
+- Symmetric and asymmetric encryption.
+- Different uses of hashing.
+
+1.3.2 Databases 
+
+- Relational database, flat file, primary key, foreign key, secondary key, entity relationship modelling, normalisation and indexing. See appendix 5f.
+- Methods of capturing, selecting, managing and exchanging data.
+- Normalisation to 3NF.
+- SQL – Interpret and modify. See appendix 5d.
+- Referential integrity.
+- Transaction processing, ACID [Atomicity, Consistency, Isolation, Durability], record locking and redundancy.
+
+1.3.3 Networks 
+
+- Characteristics of networks and the importance of protocols and standards.
+- The internet structure:
+= The TCP/IP Stack.
+= DNS
+= Protocol layering.
+= LANs and WANs.
+= Packet and circuit switching.
+- Network security and threats, use of firewalls, proxies and encryption.
+- Network hardware.
+- Client-server and peer to peer.
+
+1.3.4 Web Technologies - HTML, CSS and JavaScript.
+
+- Search engine indexing.
+- PageRank algorithm.
+- Server and client side processing.
+
+1.4.1 Data Types 
+
+- Primitive data types, integer, real/floating point, character, string and Boolean.
+- Represent positive integers in binary.
+- Use of sign and magnitude and two’s complement to represent negative numbers in binary.
+- Addition and subtraction of binary integers.
+- Represent positive integers in hexadecimal.
+- Convert positive integers between binary hexadecimal and denary.
+- Representation and normalisation of floating point numbers in binary.
+- Floating point arithmetic, positive and negative numbers, addition and subtraction.
+- Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.
+- How character sets are used to represent text.
+
+1.4.2 Data Structures 
+
+- Arrays, records, lists, tuples.
+- The following structures to store data: linked-list, graph , stack, queue, tree, binary search tree, hash table.
+- How to create, traverse, add data to and remove data from the data structures mentioned above.
+
+1.4.3 Boolean Algebra
+
+- Define problems using Boolean logic.
+- Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.
+- Use the following rules to derive or simplify statements in Boolean algebra: De Morgan’s Laws, distribution, association, commutation, double negation.
+- Using logic gate diagrams and truth tables.
+- The logic associated with D type flip flops, half and full adders.
+
+1.5.1 Computing related legislation - The Data Protection Act 1998.
+
+- The Computer Misuse Act 1990.
+- The Copyright Design and Patents Act 1988.
+- The Regulation of Investigatory Powers Act 2000.
+
+1.5.2 Moral and ethical Issues The individual moral, social, ethical and cultural
+opportunities and risks of digital technology:
+
+- Computers in the workforce.
+- Automated decision making.
+- Artificial intelligence.
+- Environmental effects.
+- Censorship and the Internet.
+- Monitor behaviour.
+- Analyse personal information.
+- Piracy and offensive communications.
+- Layout, colour paradigms and character sets.

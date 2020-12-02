@@ -93,12 +93,25 @@ app.use('/specpoints', (req, res, next) => {
 
 specpoints.post('/create', (req, res) => {
     try {
-        
-        let ps = db.prepare("INSERT INTO specpoints (specID, title, content) VALUES (?, ?, ?)");
-        let results = ps.run(req.fields['specID'], req.fields['title'], req.fields['content']);
+        let ps = db.prepare("INSERT INTO specpoints (specID, section, title, content) VALUES (?, ?, ?, ?)");
+        let results = ps.run(req.fields['specID'], req.fields['section'], req.fields['title'], req.fields['content']);
 
         if (results.changes === 1) res.json({status: "OK"});
         else throw "Unable to create new specification point";
+
+    } catch (error) {
+        console.log("An error occured: " + error);
+        res.json("An error occured: " + error);   
+    }
+});
+
+specpoints.get('/readall', (req, res) => {
+    try {
+        
+        let ps = db.prepare("SELECT * FROM specpoints");
+        let results = ps.all();
+
+        res.json(results);
 
     } catch (error) {
         console.log("An error occured: " + error);

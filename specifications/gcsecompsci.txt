@@ -1,0 +1,135 @@
+1.1 Systems architecture
+
+- the purpose of the CPU
+- Von Neumann architecture
+= MAR (Memory Address Register)
+= MDR (Memory Data Register)
+= Program Counter
+= Accumulator
+- common CPU components and their function
+= ALU (Arithmetic Logic Unit)
+= CU (Control Unit)
+= Cache
+- the function of the CPU as fetch and execute instructions stored in memory
+- how common characteristics of CPUs affect their performance
+= clock speed
+= cache size
+= number of cores
+- embedded systems
+= purpose of embedded systems
+= examples of embedded sytems.
+
+1.2 Memory
+
+- the difference between RAM and ROM
+- the purpose of ROM in a computer system
+- the purpose of RAM in a computer system
+- the need for virtual memory
+- flash memory.
+
+1.3 Storage
+
+- the need for secondary storage
+- data capacity and calculation of data capacity requirements
+- common types of storage
+= optical
+= magnetic
+= solid state
+- suitable storage devices and storage media for a given application, and the advantages and
+disadvantages of these, using characteristics
+= capacity
+= speed
+= portability
+= durability
+= reliability
+= cost.
+
+1.4 Wired and wireless networks
+
+- types of networks
+= LAN (Local Area Network)
+= WAN (Wide Area Network)
+- factors that affect the performance of networks
+- the different roles of computers in a client-server and a peer-to-peer network
+- the hardware needed to connect stand-alone computers into a Local Area Network
+= wireless access points
+= routers/switches
+= NIC (Network Interface Controller/Card)
+= transmission media
+- the internet as a worldwide collection of computer networks
+= DNS (Domain Name Server)
+= hosting
+= the cloud
+- the concept of virtual networks.
+
+1.5 Network topologies, protocols and layers
+
+- star and mesh network topologies
+- Wifi
+= frequency and channels
+= encryption
+- ethernet
+- the uses of IP addressing, MAC addressing, and protocols including
+= TCP/IP (Transmission Control Protocol/Internet Protocol)
+= HTTP (Hyper Text Transfer Protocol)
+= HTTPS (Hyper Text Transfer Protocol Secure)
+= FTP (File Transfer Protocol)
+= POP (Post Office Protocol)
+= IMAP (Internet Message Access Protocol)
+= SMTP (Simple Mail Transfer Protocol)
+- the concept of layers
+- packet switching.
+
+1.6 System security
+
+- forms of attack
+- threats posed to networks
+= malware
+= phishing
+= people as the ‘weak point’ in secure systems (social engineering)
+= brute force attacks
+= denial of service attacks
+= data interception and theft
+= the concept of SQL injection
+= poor network policy
+- identifying and preventing vulnerabilities
+= penetration testing
+= network forensics
+= network policies
+= anti-malware software
+= firewalls
+= user access levels
+= passwords
+= encryption.
+
+- the purpose and functionality of systems software
+- operating systems
+= user interface
+= memory management/multitasking
+= peripheral management and drivers
+= user management
+= file management
+- utility system software
+= encryption software
+= defragmentation
+= data compression
+= the role and methods of backup
+
+1.8 Ethical, legal, cultural and environmental concerns
+
+- how to investigate and discuss Computer Science technologies while considering
+= ethical issues
+= legal issues
+= cultural issues
+= environmental issues.
+= privacy issues.
+- how key stakeholders are affected by technologies
+- environmental impact of Computer Science
+- cultural implications of Computer Science
+- open source vs proprietary software
+- legislation relevant to Computer Science
+= The Data Protection Act 1998
+= Computer Misuse Act 1990
+= Copyright Designs and Patents Act 1988
+= Creative Commons Licensing
+= Freedom of Information Act 2000.
