@@ -119,6 +119,20 @@ specpoints.get('/readall', (req, res) => {
     }
 });
 
+specpoints.post('/search', (req, res) => {
+    try {
+
+        let ps = db.prepare("SELECT * FROM specpoints WHERE specID = (SELECT specID FROM specification WHERE coursename LIKE ?) AND (section LIKE ? OR title LIKE ? OR content LIKE ?)");
+        let results = ps.all("%" + req.fields['specname'] + "%", "%" + req.fields['search'] + "%", "%" + req.fields['search'] + "%", "%" + req.fields['search'] + "%");
+
+        res.json(results);
+
+    } catch (error) {
+        console.log("An error occured: " + error);
+        res.json("An error occured: " + error);   
+    }
+});
+
 const knownspecpoints = express.Router();
 app.use('/knownspecpoints', (req, res, next) => {
     console.log("Known Spec Points API: /knownspecpoints" + req.path);
