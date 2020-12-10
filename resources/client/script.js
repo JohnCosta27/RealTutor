@@ -39,27 +39,27 @@ function loadstudents() {
         `<div id='studentGrid' class='studentsWrapper'>
         <div class='student'>
         <div class='nameWrapper'>
-        <h1>View lessons</h1>
+        <h2>View lessons</h2>
         </div>
         </div>
         <div class='student'>
         <div class='nameWrapper'>
-        <h1>View known spec points</h1>
+        <h2>View known spec points</h12>
         </div>
         </div>
         <div class='student'>
         <div class='nameWrapper'>
-        <h1>View details</h1>
+        <h2>View details</h2>
         </div>
         </div>
-        <div class='student' onclick='loadAddLesson(${primaryKey})'>
+        <div class='student' onclick='loadAddLesson(${primaryKey}, "${studentName}")'>
         <div class='nameWrapper'>
-        <h1>Add lesson</h1>
+        <h2>Add lesson</h2>
         </div>
         </div>
         <div onclick='loadstudents()' class='student'>
         <div class='nameWrapper'>
-        <h1>Go back</h1>
+        <h2>Go back</h2>
         </div>
         </div>
         </div>
@@ -80,7 +80,7 @@ function loadstudents() {
         <label class='labels'>Content</label>
         <textarea rows="15" type='text' class='textarea' name='content'></textarea>
         <div class='flexboxHorizontal'>
-        <button type="button" class='buttons'>Cancel</button>
+        <button type="button" class='buttons' onclick='loadStudentOptions(${primaryKey}, "${studentName}")'>Cancel</button>
         <button class='buttons' type='submit'>Submit</button>
         </div>
         </form>
