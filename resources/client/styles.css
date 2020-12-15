@@ -3,6 +3,8 @@ body {
     padding: 0;
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 10px;
+    color: #FFFFFF;
+    background-color: #212121;
 }
 
 h1 {
@@ -83,10 +85,13 @@ h1 {
     transition: border 500ms;
     resize: none;
     font-family: 'Montserrat';
+    background-color: #353535;
+    border: 0;
+    color: #FFFFFF;
 }
 
 .textarea:focus, .textbox:focus {
-    border: 3px solid #353535;
+    border: 3px solid #555555;
 }
 
 .labels {
@@ -111,7 +116,77 @@ h1 {
     border-radius: 4px;
 }
 
-.buttons:hover {
+.buttons:hover, .backButton:hover {
     box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
     transform: translateY(-3px) scale(1.1);
+}
+
+/*
+Load lessons
+*/
+
+.lessonContainer {
+    width: calc(100% - 20px);
+    background-color: #131313;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border-color: #FFFFFF;
+    border-width: 1px;
+    border-style: solid;
+    padding: 5px 10px 5px 10px;
+}
+
+.lesson {
+    width: 100%;
+    height: 120px;
+    border-radius: 5px;
+    border-color: #FFFFFF;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #353535;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.lessonTitle {
+    text-align: center;
+    font-size: 36px;
+}
+
+.displayLessonContainer {
+    width: 80%;
+    margin-left: 10%;
+}
+
+.displayLesson {
+    width: 100%;
+    background-color: #131313;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border-color: #FFFFFF;
+    border-width: 1px;
+    border-style: solid;
+    margin-bottom: 5px;
+}
+
+.backButton {
+    width: 100%;
+    height: 50px;
+    font-size: 24px;
+    font-family: 'Montserrat';
+    transition: all 200ms;
+    border: 0;
+    padding: 0;
+    background-color: #353535;
+    color: #FFFFFF;
+    border-radius: 4px;
+    padding: 5px 10px 5px 10px;
+    margin-top: 5px;
+}
+
+.lessonContent {
+    text-align: center;
+    font-size: 24px; 
 }

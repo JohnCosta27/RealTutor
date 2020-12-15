@@ -202,3 +202,25 @@ lessons.post('/create', (req, res) => {
         res.json({error: "An error occured"});   
     }
 });
+
+lessons.get('/readall/:studentID', (req, res) => {
+    try {
+        let ps = db.prepare("SELECT * FROM lessons WHERE studentID = ?");
+        let results = ps.all(req.params.studentID);
+        res.json(results);
+    } catch (error) {
+        console.log("An error occured: " + error);
+        res.json({error: "An error occured"});   
+    }
+})
+
+lessons.get('/readlesson/:lessonID', (req, res) => {
+    try {
+        let ps = db.prepare("SELECT * FROM lessons WHERE lessonID = ?");
+        let results = ps.get(req.params.lessonID);
+        res.json(results);
+    } catch (error) {
+        console.log("An error occured: " + error);
+        res.json({error: "An error occured"});   
+    }
+});
