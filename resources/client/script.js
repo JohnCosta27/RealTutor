@@ -1,7 +1,7 @@
 console.log("JS loaded!");
 
 function onload() {
-    loadstudents(); 
+    loadstudents();
 }
 
 function loadstudents() {
@@ -47,7 +47,7 @@ function loadStudentOptions(primaryKey, studentName) {
     <h2>View lessons</h2>
     </div>
     </div>
-    <div class='student'>
+    <div class='student' onclick='loadSpecPoints(${primaryKey}, "${studentName}")'>
     <div class='nameWrapper'>
     <h2>View known spec points</h12>
     </div>
@@ -60,6 +60,11 @@ function loadStudentOptions(primaryKey, studentName) {
     <div class='student' onclick='loadAddLesson(${primaryKey}, "${studentName}")'>
     <div class='nameWrapper'>
     <h2>Add lesson</h2>
+    </div>
+    </div>
+    <div class='student' onclick='addKnownSpecPoint(${primaryKey}, "${studentName}", 2)'>
+    <div class='nameWrapper'>
+    <h2>Add known spec point</h2>
     </div>
     </div>
     <div onclick='loadstudents()' class='student'>
@@ -86,6 +91,10 @@ function loadAddLesson(primaryKey, studentName) {
     <textarea rows="15" type='text' class='textarea' name='content'></textarea>
     <div class='flexboxHorizontal'>
     <button type="button" class='buttons' onclick='loadStudentOptions(${primaryKey}, "${studentName}")'>Cancel</button>
+    <div>
+    <label for="lessonTime">Lesson date and time</label>
+    <input type="datetime-local" id="lessonTime">
+    </div>
     <button class='buttons' type='submit'>Submit</button>
     </div>
     </form>
@@ -96,19 +105,25 @@ function loadAddLesson(primaryKey, studentName) {
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        //if (document.getElementById("title").value.length)
-        
         const formData = new FormData(this);
         formData.append("studentID", document.getElementById('addLesson').className);
         
         let content = formData.get("content").replace('\n', '<br>');
         formData.delete("content");
         formData.append("content", content);
+        formData.append("datetime", new Date(document.getElementById("lessonTime").value).getTime());
         
-        fetch('/lessons/create', {body: formData, method: 'post'}).
-        then(response => response.json()).then(reponse => console.log(reponse));
-        
-        loadStudentOptions(primaryKey, studentName);
+        if (formData.get("title") == "" ||
+        formData.get("content") == "" ||
+        formData.get("datetime") == "") {
+            alert("Fill in all points");
+        } else {
+            
+            fetch('/lessons/create', {body: formData, method: 'post'}).
+            then(response => response.json()).then(reponse => console.log(reponse));
+            loadStudentOptions(primaryKey, studentName);
+            
+        }
         
     });
     
@@ -116,13 +131,13 @@ function loadAddLesson(primaryKey, studentName) {
 
 function loadLessons(primaryKey, studentName) {
     
+    document.getElementById('contentWrapper').innerHTML = ``;
     document.getElementById('contentWrapper').innerHTML = `<div id='lessonContainer' class='lessonContainer'></div>`;
     
     fetch('/lessons/readall/' + primaryKey).then(response => response.json()).
     then(lessons => {
         
         lessons.sort((a,b) => b.datetime - a.datetime);
-        console.log(lessons);
         
         document.getElementById('title').innerText = studentName + " - Lessons";
         
@@ -137,10 +152,8 @@ function loadLessons(primaryKey, studentName) {
         
         if (lessons.length == 0) {
             document.getElementById('lessonContainer').innerHTML += 
-            `<div class='lessonContainer'>
-            <div class='lesson'>
+            `<div class='lesson'>
             <p class='lessonTitle'>No lessons available</p>
-            </div>
             </div>`;
         }
         
@@ -164,6 +177,59 @@ function loadLesson(primaryKey, studentName, lessonID) {
         <p class='lessonContent'>${lesson.title} <br><br> ${lesson.content}</p>
         </div>
         <button type="button" class='backButton' onclick='loadLessons(${primaryKey}, "${studentName}")'>Cancel</button>
+        </div>`
+        
+    });
+    
+}
+
+function loadSpecPoints(primaryKey, studentName) {
+    
+    document.getElementById('contentWrapper').innerHTML = `<div id='lessonContainer' class='lessonContainer'></div>`;
+    
+    fetch('/knownspecpoints/readall/' + primaryKey).then(response => response.json()).
+    then(specpoints => {
+        
+        specpoints.sort((a,b) => b.datetime - a.datetime);
+        
+        document.getElementById('title').innerText = studentName + " - Known Points";
+        
+        for (let specpoint of specpoints) {
+            let date = new Date(specpoint.datetime).toJSON().slice(0,10).split('-').reverse().join('/');
+            document.getElementById('lessonContainer').innerHTML +=
+            `<div id='lesson${specpoint.pointID}' class='lesson' onclick='loadSpecPoint(${primaryKey}, "${studentName}", ${specpoint.pointID})'>
+            <p class='specPointsText'>${specpoint.section} ${specpoint.title} ${specpoint.content}</p>
+            </div>
+            </div>`;
+        }
+        
+        if (specpoints.length == 0) {
+            document.getElementById('lessonContainer').innerHTML += 
+            `<div class='lesson'>
+            <p class='lessonTitle'>No known spec points</p>
+            </div>`;
+        }
+        
+        document.getElementById('contentWrapper').innerHTML += 
+        `<button 'type="button" class='backButton' onclick='loadStudentOptions(${primaryKey}, "${studentName}")'>Cancel</button>`;
+        
+    });
+    
+}
+
+function loadSpecPoint(primaryKey, studentName, pointID) {
+    
+    document.getElementById('contentWrapper').innerHTML = ``;
+    
+    fetch('/specpoints/getspecpoint/' + pointID).then(response => response.json()).
+    then(point => {
+        
+        document.getElementById('contentWrapper').innerHTML += 
+        `<div class='displayLessonContainer'>
+        <div class='displayLesson'>
+        <p class='lessonContent'>${point.section} <br><br> ${point.title} <br><br> ${point.content}</p>
+        </div>
+        <button type="button" class='backButton' onclick='loadSpecPoints(${primaryKey}, "${studentName}")'>Cancel</button>
         </div>`
         
     });
@@ -212,6 +278,58 @@ function addStudent() {
         const formData = new FormData(this);
         
         fetch('/students/create', {body: formData, method: 'post'}).
+        then(response => response.json()).then(reponse => console.log(reponse));
+        
+        loadstudents();
+        
+    });
+    
+}
+
+function addKnownSpecPoint(primaryKey, studentName, specID) {
+    
+    document.getElementById('contentWrapper').innerHTML = `<form id='addKnownSpecPoint'><select name="pointID" class='textbox' id='dropdown'></select>`
+    let section = "";
+    
+    fetch('/specpoints/readfromspec/' + specID).then(response => response.json()).then(points => {
+        for (let point of points) {
+            
+            if (point.section != section) {
+                section = point.section;
+                document.getElementById('dropdown').innerHTML += 
+                `<option value="${point.pointID}" disabled>${section}</option>`
+            }
+            
+            let content = point.title + point.content;
+            if (content.length > 120) content = content.substring(0, 120) + "...";
+            
+            document.getElementById('dropdown').innerHTML += 
+            `<option style='font-size: 16px' value="${point.pointID}">${content}</option>`
+            
+        }
+    });
+    
+    document.getElementById('addKnownSpecPoint').innerHTML += 
+    `<div class='flexboxHorizontal'>
+    <button type="button" class='buttons' onclick='loadStudentOptions(${primaryKey}, "${studentName}")'>Cancel</button>
+    <div>
+    <label for="lessonTime">Lesson date and time</label>
+    <input type="datetime-local" id="lessonTime">
+    </div>
+    <button class='buttons' type='submit'>Submit</button>
+    </div>
+    </form>`;
+    
+    const form = document.getElementById('addKnownSpecPoint');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        formData.append("datetime", new Date(document.getElementById("lessonTime").value).getTime());
+        formData.append("studentID", primaryKey);
+
+        fetch('/knownspecpoints/create', {body: formData, method: 'post'}).
         then(response => response.json()).then(reponse => console.log(reponse));
         
         loadstudents();

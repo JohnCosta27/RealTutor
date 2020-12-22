@@ -147,7 +147,21 @@ specpoints.post('/search', (req, res) => {
     }
 });
 
-specpoints.get('/getspec/:name', (req, res) => {
+specpoints.get('/readfromspec/:specID', (req, res) => {
+    try {
+        
+        let ps = db.prepare("SELECT * FROM specpoints WHERE specID = ?");
+        let results = ps.all(req.params.specID);
+        
+        res.json(results);
+        
+    } catch (error) {
+        console.log("An error occured: " + error);
+        res.json({error: "An error occured"});   
+    }
+});
+
+specpoints.get('/getspecfromname/:name', (req, res) => {
     try {
         
         let ps = db.prepare("SELECT * FROM specpoints WHERE specID = (SELECT specID FROM specification WHERE coursename LIKE ?)");
@@ -161,6 +175,20 @@ specpoints.get('/getspec/:name', (req, res) => {
     }
 });
 
+specpoints.get('/getspecpoint/:pointID', (req, res) => {
+    try {
+        
+        let ps = db.prepare("SELECT * FROM specpoints WHERE pointID = ?");
+        let results = ps.get(req.params.pointID);
+        
+        res.json(results);
+        
+    } catch (error) {
+        console.log("An error occured: " + error);
+        res.json({error: "An error occured"});   
+    } 
+})
+
 const knownspecpoints = express.Router();
 app.use('/knownspecpoints', (req, res, next) => {
     console.log("Known Spec Points API: /knownspecpoints" + req.path);
@@ -171,11 +199,22 @@ knownspecpoints.post('/create', (req, res) => {
     try {
         
         let ps = db.prepare("INSERT INTO knownspecpoints (studentID, pointID, datetime) VALUES (?, ?, ?)");
-        let results = ps.run(req.fields['specID'], req.fields['title'], new Date().getTime());
+        let results = ps.run(req.fields['studentID'], req.fields['pointID'], req.fields['datetime']);
         
         if (results.changes === 1) res.json({status: "OK"});
         else throw "Unable to create new known specification point";
         
+    } catch (error) {
+        console.log("An error occured: " + error);
+        res.json({error: "An error occured"});   
+    }
+});
+
+knownspecpoints.get('/readall/:studentID', (req, res) => {
+    try {
+        let ps = db.prepare("SELECT * FROM knownspecpoints INNER JOIN specpoints on knownspecpoints.pointID = specpoints.pointID WHERE studentID = ?");
+        let results = ps.all(req.params.studentID);
+        res.json(results);
     } catch (error) {
         console.log("An error occured: " + error);
         res.json({error: "An error occured"});   
@@ -192,7 +231,7 @@ lessons.post('/create', (req, res) => {
     try {
         
         let ps = db.prepare("INSERT INTO lessons (studentID, title, content, datetime) VALUES (?, ?, ?, ?)");
-        let results = ps.run(req.fields['studentID'], req.fields['title'], req.fields['content'], new Date().getTime());
+        let results = ps.run(req.fields['studentID'], req.fields['title'], req.fields['content'], req.fields['datetime']);
         
         if (results.changes === 1) res.json({status: "OK"});
         else throw "Unable to create new lesson";

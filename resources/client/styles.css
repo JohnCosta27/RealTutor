@@ -9,6 +9,17 @@ body {
 
 h1 {
     cursor: pointer;
+    user-select: none;
+}
+
+h2 {
+    cursor: pointer;
+    user-select: none;
+}
+
+h3 {
+    cursor: pointer;
+    user-select: none;
 }
 
 #contentWrapper {
@@ -25,12 +36,10 @@ h1 {
 }
 
 .studentsWrapper {
-    
     display: grid;
     gap: 0.5rem;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     height: 400px;
-    
 }
 
 .student {
@@ -189,4 +198,25 @@ Load lessons
 .lessonContent {
     text-align: center;
     font-size: 24px; 
+}
+
+#lessonTime {
+    width: 100%;
+    height: 50px;
+    font-size: 24px;
+    font-family: 'Montserrat';
+    transition: all 200ms;
+    border: 0;
+    padding: 0;
+    background-color: #353535;
+    color: #FFFFFF;
+    border-radius: 4px;
+    padding: 5px 10px 5px 10px;
+    margin-top: 5px;
+}
+
+.specPointsText {
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
 }
