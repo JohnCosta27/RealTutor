@@ -88,6 +88,9 @@ $ Know and use the function lnx and its graph.
 $ Know and use lnx as the inverse function of e^x
 - Understand and use the laws of logarithms.
 $ Addition, subtraction and power laws.
+$ log(a) + log(b) = log(ab)
+$ log(a) - log(b) = log(a/b)
+$ log(a^b) = blog(a)
 - Solve equations of the form a^x = b.
 - Use logarithmic graphs to estimate parameters in relationships of the form:
 $ y = ax^n and y = kb^x, given data for x and y
@@ -142,3 +145,91 @@ $ Understand how this can fail.
 - Add vectors diagrammatically and perform the algebraic operations of vector addition and multiplication by scalars, and understand their geometrical interpretations.
 - Understand and use position vectors; calculate the distance between two points represented by position vectors.
 - Use vectors to solve problems in pure mathematics and in context (including forces).
+
+1 Statistics - Statistical sampling
+
+- Understand and use the terms ‘population’ and ‘sample’.
+- Use samples to make informal inferences about the population.
+- Understand and use sampling techniques, including simple random sampling and opportunity sampling.
+- Select or critique sampling techniques in the context of solving a statistical problem, including understanding that different samples can lead to different conclusions about thepopulation.
+
+2 Statistics - Data representation and interpretation
+
+- Interpret diagrams for single-variable data, including understanding that area in a histogram represents frequency.
+$ Connect to probability distributions.
+- Interpret scatter diagrams and regression lines for bivariate data, including recognition of scatter diagrams which include distinct sections of the population
+- Understand informal interpretation of correlation.
+$ Understand that correlation does not imply causation.
+- Interpret measures of central tendency and variation, extending to standard deviation.
+- Be able to calculate standard deviation, including from summary statistics.
+- Recognise and interpret possible outliers in data sets and statistical diagrams.
+- Select or critique data presentation techniques in the context of a statistical problem.
+- Be able to clean data, including dealing with missing data, errors and outliers.
+
+3 Statistics - Probability
+
+- Understand and use mutually exclusive and independent events when calculating probabilities.
+$ Link to discrete and continuous distributions.
+- Understand and use conditional probability, including the use of tree diagrams, Venn diagrams, two-way tables
+- Understand and use the conditional probability formula
+$ p(A|B) = p(AnB)/p(B)
+$ p(A') = 1 - p(A)
+$ p(AuB) = p(A) + p(B) - p(AnB)
+$ p(AnB) = p(A)p(B|A)
+- Modelling with probability, including critiquing assumptions made and the likely effect of more realistic assumptions.
+
+4 Statistics - Statistical distributions
+
+- Understand and use simple, discrete probability distributions .
+$ calculation of mean and variance of discrete random variables is excluded, including the binomial distribution, as a model.
+$ Calculate probabilities using the binomial distribution.
+- Understand and use the Normal distribution as a model; find probabilities using the Normal distribution
+$ Link to histograms, mean, standard deviation, points of inflection
+$ Link to the binomial distribution
+- Select an appropriate probability distribution for a context, with appropriate reasoning, including recognising when the binomial or Normal model may not be appropriate.
+
+5 Statistics - Statistical hypothesis testing
+
+- Understand and apply the language of statistical hypothesis testing, developed through a binomial model. 
+$ Null hypothesis, alternative hypothesis, significance level, test statistic, 1-tail test, 2-tail test, critical value, critical region, acceptance region, p-value;
+$ extend to correlation coefficients as measures of how close data points lie to a straight line.
+$ be able to interpret a given correlation coefficient using a given p-value or critical value (calculation of correlation coefficients is excluded).
+- Conduct a statistical hypothesis test for the proportion in the binomial distribution and interpret the results in context.
+- Understand that a sample is being used to make an inference about the population
+- appreciate that the significance level is the probability of incorrectly rejecting the null hypothesis.
+- Conduct a statistical hypothesis test for the mean of a Normal distribution with known, given or assumed variance and interpret the results in context.
+
+1 Mechanics - Quantities and units in mechanics
+
+- Understand and use fundamental quantities and units in the S.I. system: length, time, mass.
+- Understand and use derived quantities and units: velocity, acceleration, force, weight, moment.
+
+2 Mechanics - Kinematics
+
+- Understand and use the language of kinematics: position; displacement; distance travelled; velocity; speed; acceleration.
+- Understand, use and interpret graphs in kinematics for motion in a straight line: 
+$ Displacement against time and interpretation of gradient.
+$ Velocity against time and interpretation of gradient and area under the graph.
+- Understand, use and derive the formulae for constant acceleration for motion in a straight line.
+$ Extend to 2 dimensions using vectors.
+- Use calculus in kinematics for motion in a straight line.
+$ Extend to 2 dimensions using vectors.
+- Model motion under gravity in a vertical plane using vectors; projectiles.
+
+3 Mechanics - Forces and Newton's laws
+
+- Understand the concept of a force; understand and use Newton’s first law.
+- Understand and use Newton’s second law for motion in a straight line.
+$ Extend to situations where forces need to be resolved.
+- Understand and use weight and motion in a straight line under gravity:
+$ Gravitational acceleration, g, and its value in S.I. units to varying degrees of accuracy
+- Understand and use Newton’s third law; equilibrium of forces on a particle and motion in a straight line.
+$ Application to problems involving smooth pulleys and connected particles.
+$ Resolving forces in 2 dimensions; equilibrium of a particle under coplanar forces.
+- Understand and use addition of forces; resultant forces; dynamics for motion in a plane.
+- Understand and use the F ≤ µR model for friction.
+$ Coefficient of friction; motion of a body on a rough surface; limiting friction and statics.
+
+4 Mechanics - Moments
+
+- Understand and use moments in simple static contexts.
