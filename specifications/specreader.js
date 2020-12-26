@@ -1,9 +1,9 @@
-let primarykey = 2;
+let primarykey = 3;
 
 let fs = require('fs');
 let request = require('request');
 
-fs.readFile('alevelcompsci.txt', 'utf-8', (err, data) => {
+fs.readFile('alevelmaths.txt', 'utf-8', (err, data) => {
 
     if (err) return console.log(err);
     
@@ -31,7 +31,7 @@ fs.readFile('alevelcompsci.txt', 'utf-8', (err, data) => {
             title = line;
         }
 
-        if (line.charAt(0) == "=") {
+        if (line.charAt(0) == "$") {
             body = body + line;
         }
 

@@ -115,8 +115,9 @@
 - Using logic gate diagrams and truth tables.
 - The logic associated with D type flip flops, half and full adders.
 
-1.5.1 Computing related legislation - The Data Protection Act 1998.
+1.5.1 Computing related legislation 
 
+- The Data Protection Act 1998.
 - The Computer Misuse Act 1990.
 - The Copyright Design and Patents Act 1988.
 - The Regulation of Investigatory Powers Act 2000.

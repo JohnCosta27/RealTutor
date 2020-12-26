@@ -102,7 +102,7 @@ disadvantages of these, using characteristics
 = passwords
 = encryption.
 
-- the purpose and functionality of systems software
+1.7 The purpose and functionality of systems software
 - operating systems
 = user interface
 = memory management/multitasking
