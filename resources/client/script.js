@@ -11,7 +11,7 @@ function loadstudents() {
     document.getElementById('contentWrapper').innerHTML = `<div id='studentGrid' class='studentsWrapper'></div>`;
     fetch('/students/readall').then(response => response.json()).
     then(students => {
-        console.log(students);
+
         for (let student of students) {
             
             let studentName = student.firstname + " " + student.surname;
@@ -20,7 +20,6 @@ function loadstudents() {
             `<div class='student' onclick='loadStudentOptions(${student.studentID}, "${studentName}")'>
             <div class='nameWrapper'>
             <h1>${studentName}</h1>
-            <h3>${student.coursename}</h3>
             </div>
             </div>
             </div>`;
@@ -171,7 +170,7 @@ function loadLesson(primaryKey, studentName, lessonID) {
     
     fetch('/lessons/readlesson/' + lessonID).then(response => response.json()).
     then(lesson => {
-        console.log(lesson);
+
         document.getElementById('contentWrapper').innerHTML += 
         `<div class='displayLessonContainer'>
         <div class='displayLesson'>
@@ -196,7 +195,6 @@ function loadSpecPoints(primaryKey, studentName) {
         document.getElementById('title').innerText = studentName + " - Known Points";
         
         for (let specpoint of specpoints) {
-            let date = new Date(specpoint.datetime).toJSON().slice(0,10).split('-').reverse().join('/');
             document.getElementById('lessonContainer').innerHTML +=
             `<div id='lesson${specpoint.pointID}' class='lesson' onclick='loadSpecPoint(${primaryKey}, "${studentName}", ${specpoint.pointID})'>
             <p class='specPointsText'>${specpoint.section} ${specpoint.title} ${specpoint.content}</p>
@@ -224,15 +222,13 @@ function loadSpecPoint(primaryKey, studentName, pointID) {
     
     fetch('/specpoints/getspecpoint/' + pointID).then(response => response.json()).
     then(point => {
-        
         document.getElementById('contentWrapper').innerHTML += 
         `<div class='displayLessonContainer'>
         <div class='displayLesson'>
-        <p class='lessonContent'>${point.section} <br><br> ${point.title} <br><br> ${point.content}</p>
+        <p class='lessonContent'>${point.section}<br><br> ${point.title} <br><br> ${point.content}</p>
         </div>
         <button type="button" class='backButton' onclick='loadSpecPoints(${primaryKey}, "${studentName}")'>Cancel</button>
         </div>`
-        
     });
     
 }
@@ -291,18 +287,9 @@ function addKnownSpecPoint(primaryKey, studentName) {
     
     document.getElementById('contentWrapper').innerHTML = `<form id='addKnownSpecPoint'><select name="pointID" class='textbox' id='dropdown'></select>`
     let section = "";
-    
-    
-    fetch('/students/specid/' + primaryKey).then(response => response.json()).then(specID => {
-        console.log(specID.specID)
-        fetch('/specpoints/readfromspec/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({studentID: primaryKey, specID: specID.specID})
-        }).then(response => response.json()).then(points => {
-            console.log(points);
+
+        fetch('/specpoints/readfromspec/' + primaryKey).then(response => response.json()).then(points => {
+
             for (let point of points) {
                 
                 if (point.section != section) {
@@ -318,8 +305,8 @@ function addKnownSpecPoint(primaryKey, studentName) {
                 `<option style='font-size: 16px' value="${point.pointID}">${content}</option>`
                 
             }
+
         });
-    });
     
     document.getElementById('addKnownSpecPoint').innerHTML += 
     `<div class='flexboxHorizontal'>

@@ -39,7 +39,7 @@ students.post('/create', (req, res) => {
 students.get('/readall', (req, res) => {
     try {
         
-        let ps = db.prepare("SELECT studentID, firstname, surname, email, coursename FROM students INNER JOIN specification ON students.specID = specification.specID");
+        let ps = db.prepare("SELECT * FROM students");
         let results = ps.all();
         
         res.json(results);
@@ -52,8 +52,8 @@ students.get('/readall', (req, res) => {
 
 students.get('/specid/:studentID', (req, res) => {
     try {
-        let ps = db.prepare("SELECT specID FROM students WHERE studentID = ?");
-        let results = ps.get(req.params.studentID);
+        let ps = db.prepare("SELECT specID FROM studentsSpecification WHERE studentID = ?");
+        let results = ps.all(req.params.studentID);
         res.json(results);
     } catch (error) {
         console.log("An error occured: " + error);
@@ -158,10 +158,10 @@ specpoints.post('/search', (req, res) => {
     }
 });
 
-specpoints.post('/readfromspec', (req, res) => {
+specpoints.get('/readfromspec/:studentID', (req, res) => {
     try {
-        let ps = db.prepare("SELECT * FROM specpoints WHERE pointID NOT IN (SELECT pointID FROM knownspecpoints WHERE studentID = ?) AND specID = ?");
-        let results = ps.all(req.fields['studentID'], req.fields['specID']);
+        let ps = db.prepare("SELECT * FROM specpoints INNER JOIN studentsSpecification ON specpoints.specID = studentsSpecification.specID INNER JOIN students ON students.studentID = studentsSpecification.studentID WHERE students.studentID = ? AND specpoints.pointID NOT IN (SELECT pointID FROM knownspecpoints WHERE studentID = ?)");
+        let results = ps.all(req.params.studentID, req.params.studentID);
         res.json(results);
     } catch (error) {
         console.log("An error occured: " + error);
