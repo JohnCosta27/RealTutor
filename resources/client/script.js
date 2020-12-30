@@ -285,7 +285,7 @@ function addStudent() {
 
 function addKnownSpecPoint(primaryKey, studentName) {
     
-    document.getElementById('contentWrapper').innerHTML = `<form id='addKnownSpecPoint'><select name="pointID" class='textbox' id='dropdown'></select>`
+    document.getElementById('contentWrapper').innerHTML = `<form id='addKnownSpecPoint'><select name="pointID" class='textbox' id='dropdown' multiple></select>`
     let section = "";
 
         fetch('/specpoints/readfromspec/' + primaryKey).then(response => response.json()).then(points => {
@@ -325,11 +325,19 @@ function addKnownSpecPoint(primaryKey, studentName) {
         e.preventDefault();
         
         const formData = new FormData(this);
-        formData.append("datetime", new Date(document.getElementById("lessonTime").value).getTime());
-        formData.append("studentID", primaryKey);
         
-        fetch('/knownspecpoints/create', {body: formData, method: 'post'}).
-        then(response => response.json()).then(reponse => console.log(reponse));
+        for (let value of formData.values()) {
+            console.log(value);
+
+            const newFormData = new FormData();
+            newFormData.append("pointID", value);
+            newFormData.append("datetime", new Date(document.getElementById("lessonTime").value).getTime());
+            newFormData.append("studentID", primaryKey);
+
+            fetch('/knownspecpoints/create', {body: newFormData, method: 'post'}).
+            then(response => response.json()).then(reponse => console.log(reponse));
+
+        }
         
         loadstudents();
         
