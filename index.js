@@ -220,7 +220,7 @@ knownspecpoints.post('/create', (req, res) => {
 
 knownspecpoints.get('/readall/:studentID', (req, res) => {
     try {
-        let ps = db.prepare("SELECT * FROM knownspecpoints INNER JOIN specpoints on knownspecpoints.pointID = specpoints.pointID WHERE studentID = ?");
+        let ps = db.prepare("SELECT knownspecpoints.studentID, knownspecpoints.pointID, knownspecpoints.datetime, specpoints.specID, specpoints.pointID, specpoints.section, specpoints.title, specpoints.content, specification.coursename FROM knownspecpoints  INNER JOIN specpoints on knownspecpoints.pointID = specpoints.pointID INNER JOIN specification on specpoints.specID = specification.specID WHERE studentID = ?");
         let results = ps.all(req.params.studentID);
         res.json(results);
     } catch (error) {

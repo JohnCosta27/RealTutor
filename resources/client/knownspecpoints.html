@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    
-    <title>Tree Example</title>
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Tutor</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,400&display=swap" rel="stylesheet">
+</head> 
+<body>
+
     <style>
-        
         .node {
             cursor: pointer;
         }
-        
         .node circle {
             fill: #fff;
             stroke: steelblue;
             stroke-width: 3px;
         }
-        
         .node text {
             font: 12px sans-serif;
         }
-        
         .link {
             fill: none;
             stroke: #ccc;
             stroke-width: 2px;
         }
-        
+        text {
+            color: #fff;
+        }
     </style>
-    
-</head>
 
-<body>
-    <!-- load the d3.js library -->	
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-    <script src='jsonTest.js'></script>
+
     <script>
-        
-        fetch('http://localhost:8000/specpoints/readall').then(response => response.json()).then(points => {
+
+        let url = new URL(window.location.href);
+
+        fetch('http://localhost:8000/knownspecpoints/readall/' + url.searchParams.get("id")).then(response => response.json()).then(points => {
             
             let specMap = new Map();
             let specIDs = new Map();
-            
+
             for (let point of points) {
                 if (specMap.has(point.section)) {
                     let newArray = specMap.get(point.section);
@@ -50,36 +53,38 @@
                 } else {
                     specMap.set(point.section, new Array({"name": point.title + point.content, "parent": point.section}));
                     
-                    if (specIDs.has(point.specID)) {
-                        let newArray = specIDs.get(point.specID);
-                        newArray.push({"name": point.section, "parent": point.specID})
-                        specIDs.set(point.specID, newArray);
+                    if (specIDs.has(point.coursename)) {
+                        let newArray = specIDs.get(point.coursename);
+                        newArray.push({"name": point.section, "parent": point.coursename})
+                        specIDs.set(point.coursename, newArray);
                     } else {
-                        specIDs.set(point.specID, new Array({"name": point.section, "parent": point.specID}));
+                        specIDs.set(point.coursename, new Array({"name": point.section, "parent": point.coursename}));
                     }
 
                 }
             }
 
-            let subjects = [];
+            let treeData = [];
 
             for (const [key, value] of specIDs.entries()) {
                 
                 let children = [];
-                for (const singlePoint of value) children.push({"name": singlePoint.name, "parent": singlePoint.specID, "_children": specMap.get(singlePoint.name)});
+                for (const singlePoint of value) children.push({"name": singlePoint.name, "parent": singlePoint.coursename, "_children": specMap.get(singlePoint.name)});
 
-                let parentJSON = {"name": key, "parent": "Testing", "children": children};
-                subjects.push(parentJSON);
+                treeData.push({"name": key, "parent": "none", "children": children});
 
             }
 
-            let treeData = [{"name": "Testing", "parent": "null", "children": subjects}];
+            console.log(treeData);
+
+            //let treeData = [{"name": "Testing", "parent": "null", "children": subjects}];
 
             // ************** Generate the tree diagram	 *****************
-            let margin = {top: 20, right: 120, bottom: 20, left: 120},
+            let margin = {top: -20, right: 120, bottom: 20, left: 200},
             width = window.innerWidth - margin.right - margin.left,
             height = window.innerHeight - margin.top - margin.bottom;
-            
+
+            console.log(window.innerWidth);
 
             let i = 0,
             duration = 750,
@@ -133,7 +138,8 @@
                 .attr("dy", ".35em")
                 .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
                 .text(function(d) { return d.name; })
-                .style("fill-opacity", 1e-6);
+                .style("fill-opacity", 1e-6)
+                .style("fill", 'white');
                 
                 // Transition nodes to their new position.
                 let nodeUpdate = node.transition()
@@ -205,8 +211,13 @@
             }
             
         });
-        
+
     </script>
+
+    <div class='titleWrapper'>
+        <h1 id='title'>Student List</h1>
+    </div>
+    
     
 </body>
 </html>

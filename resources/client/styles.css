@@ -35,6 +35,10 @@ h3 {
     user-select: none;
 }
 
+a {
+    text-decoration: none;
+}
+
 #contentWrapper {
     width: 80%;
     margin-left: 10%;

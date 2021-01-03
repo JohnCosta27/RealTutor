@@ -38,7 +38,6 @@ function loadstudents() {
 function loadStudentOptions(primaryKey, studentName) {
     
     document.getElementById('title').innerText = studentName;
-    
     document.getElementById('contentWrapper').innerHTML = ``;
     document.getElementById('contentWrapper').innerHTML += 
     `<div id='studentGrid' class='studentsWrapper'>
@@ -47,11 +46,11 @@ function loadStudentOptions(primaryKey, studentName) {
     <h2>View lessons</h2>
     </div>
     </div>
-    <div class='student' onclick='loadSpecPoints(${primaryKey}, "${studentName}")'>
+    <a href="knownspecpoints.html?id=${primaryKey}"><div class='student'>
     <div class='nameWrapper'>
     <h2>View known spec points</h12>
     </div>
-    </div>
+    </div></a>
     <div class='student'>
     <div class='nameWrapper'>
     <h2>View details</h2>
