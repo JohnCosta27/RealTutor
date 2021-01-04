@@ -75,9 +75,17 @@
 
             }
 
-            console.log(treeData);
+            if (treeData.length > 1) {
+            
+                for (let item of treeData) item.parent = "Subjects";
+                let subjects = {"name": "Subjects", "parent": "none", "children": treeData};
 
-            //let treeData = [{"name": "Testing", "parent": "null", "children": subjects}];
+                treeData = [];
+                treeData.push(subjects);
+
+            }
+
+            console.log(treeData);
 
             // ************** Generate the tree diagram	 *****************
             let margin = {top: -20, right: 120, bottom: 20, left: 200},
