@@ -23,10 +23,10 @@ app.use('/students', (req, res, next) => {
 
 students.post('/create', (req, res) => {
     try {
-        
-        let ps = db.prepare("INSERT INTO Students (firstname, surname, email, specID) VALUES (?, ?, ?, ?)");
-        let results = ps.run(req.fields['firstname'], req.fields['surname'], req.fields['email'], req.fields['specID']);
-        
+
+        let ps = db.prepare("INSERT INTO Students (firstname, surname, email) VALUES (?, ?, ?)");
+        let results = ps.run(req.fields['firstname'], req.fields['surname'], req.fields['email']);
+
         if (results.changes === 1) res.json({status: "OK"});
         else throw "Unable to create new student";
         
@@ -58,6 +58,30 @@ students.get('/specid/:studentID', (req, res) => {
     } catch (error) {
         console.log("An error occured: " + error);
         res.json({error: "An error occured"});   
+    }
+});
+
+function getID(email) { return db.prepare("SELECT studentID FROM students WHERE email = ?").get(email); }
+
+const studentsSpecification = express.Router();
+app.use('/studentspecification', (req, res, next) => {
+    console.log("Student Specification API: /spec" + req.path);
+    next();
+}, studentsSpecification);
+
+studentsSpecification.post('/create', (req, res) => {
+    try {
+
+        let studentID = getID(req.fields['email']);
+        let ps = db.prepare(`INSERT INTO studentsSpecification (studentID, specID) VALUES (?, ?)`);
+        let results = ps.run(studentID.studentID, req.fields['specID']);
+
+        if (results.changes === 1) res.json({status: "OK"});
+        else throw "Unable to create new student specification";
+
+    } catch (error) {
+        console.log("An error occured: " + error);
+        res.json("An error occured: " + error);
     }
 });
 

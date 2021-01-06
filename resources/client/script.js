@@ -11,7 +11,7 @@ function loadstudents() {
     document.getElementById('contentWrapper').innerHTML = `<div id='studentGrid' class='studentsWrapper'></div>`;
     fetch('/students/readall').then(response => response.json()).
     then(students => {
-
+        
         for (let student of students) {
             
             let studentName = student.firstname + " " + student.surname;
@@ -169,7 +169,7 @@ function loadLesson(primaryKey, studentName, lessonID) {
     
     fetch('/lessons/readlesson/' + lessonID).then(response => response.json()).
     then(lesson => {
-
+        
         document.getElementById('contentWrapper').innerHTML += 
         `<div class='displayLessonContainer'>
         <div class='displayLesson'>
@@ -246,7 +246,7 @@ function addStudent() {
     <label class='labels'>Email</label>
     <input id='email' type='text' class='textbox' name='email'>
     <label class='labels'>Course</label>
-    <select name="coursename" class='textbox' id='dropdown'>`
+    <select name="specID" class='textbox' id='dropdown' multiple>`
     
     fetch('/spec/readall').then(response => response.json()).then(specs => {
         
@@ -272,9 +272,25 @@ function addStudent() {
         e.preventDefault();
         
         const formData = new FormData(this);
+        let studentSpecs = new FormData();
+        
+        for (var value of formData.entries()) if (value[0] == "specID") studentSpecs.append("specID", value[1]);
         
         fetch('/students/create', {body: formData, method: 'post'}).
-        then(response => response.json()).then(reponse => console.log(reponse));
+        then(response => response.json()).then(response => {
+
+            console.log(response);
+
+            for (let value of studentSpecs) {
+                let specFormData = new FormData();
+                specFormData.append("specID", value[1]);
+                specFormData.append("email", formData.get("email"));
+                fetch('/studentspecification/create', {body: specFormData, method: 'post'}).
+                then(response1 => response1.json()).then(thingy => console.log(thingy));
+            }
+
+        });
+    
         
         loadstudents();
         
@@ -286,26 +302,26 @@ function addKnownSpecPoint(primaryKey, studentName) {
     
     document.getElementById('contentWrapper').innerHTML = `<form id='addKnownSpecPoint'><select name="pointID" class='textbox' id='dropdown' multiple></select>`
     let section = "";
-
-        fetch('/specpoints/readfromspec/' + primaryKey).then(response => response.json()).then(points => {
-
-            for (let point of points) {
-                
-                if (point.section != section) {
-                    section = point.section;
-                    document.getElementById('dropdown').innerHTML += 
-                    `<option value="${point.pointID}" disabled>${section}</option>`
-                }
-                
-                let content = point.title + point.content;
-                if (content.length > 120) content = content.substring(0, 120) + "...";
-                
+    
+    fetch('/specpoints/readfromspec/' + primaryKey).then(response => response.json()).then(points => {
+        
+        for (let point of points) {
+            
+            if (point.section != section) {
+                section = point.section;
                 document.getElementById('dropdown').innerHTML += 
-                `<option style='font-size: 16px' value="${point.pointID}">${content}</option>`
-                
+                `<option value="${point.pointID}" disabled>${section}</option>`
             }
-
-        });
+            
+            let content = point.title + point.content;
+            if (content.length > 120) content = content.substring(0, 120) + "...";
+            
+            document.getElementById('dropdown').innerHTML += 
+            `<option style='font-size: 16px' value="${point.pointID}">${content}</option>`
+            
+        }
+        
+    });
     
     document.getElementById('addKnownSpecPoint').innerHTML += 
     `<div class='flexboxHorizontal'>
@@ -327,15 +343,15 @@ function addKnownSpecPoint(primaryKey, studentName) {
         
         for (let value of formData.values()) {
             console.log(value);
-
+            
             const newFormData = new FormData();
             newFormData.append("pointID", value);
             newFormData.append("datetime", new Date(document.getElementById("lessonTime").value).getTime());
             newFormData.append("studentID", primaryKey);
-
+            
             fetch('/knownspecpoints/create', {body: newFormData, method: 'post'}).
             then(response => response.json()).then(reponse => console.log(reponse));
-
+            
         }
         
         loadstudents();
