@@ -26,7 +26,7 @@
         }
         .link {
             fill: none;
-            stroke: #ccc;
+            stroke: #333333;
             stroke-width: 2px;
         }
         text {
@@ -88,11 +88,9 @@
             console.log(treeData);
 
             // ************** Generate the tree diagram	 *****************
-            let margin = {top: -20, right: 120, bottom: 20, left: 200},
+            let margin = {top: -20, right: 50, bottom: 20, left: 200},
             width = window.innerWidth - margin.right - margin.left,
             height = window.innerHeight - margin.top - margin.bottom;
-
-            console.log(window.innerWidth);
 
             let i = 0,
             duration = 750,
@@ -125,7 +123,7 @@
                 links = tree.links(nodes);
                 
                 // Normalize for fixed-depth.
-                nodes.forEach(function(d) { d.y = d.depth * window.innerWidth / 6; });
+                nodes.forEach(function(d) { d.y = d.depth * window.innerWidth / 10; });
                 
                 // Update the nodes…
                 let node = svg.selectAll("g.node")
