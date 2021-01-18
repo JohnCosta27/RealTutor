@@ -40,7 +40,7 @@
 
         let url = new URL(window.location.href);
 
-        fetch('http://localhost:8000/knownspecpoints/readall/' + url.searchParams.get("id")).then(response => response.json()).then(points => {
+        fetch('knownspecpoints/readall/' + url.searchParams.get("id")).then(response => response.json()).then(points => {
             
             let specMap = new Map();
             let specIDs = new Map();
