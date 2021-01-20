@@ -11,13 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,400&display=swap" rel="stylesheet">
 </head> 
 <body>
-
+    
     <style>
         .node {
             cursor: pointer;
         }
         .node circle {
-            fill: #fff;
+            fill: #333;
             stroke: steelblue;
             stroke-width: 3px;
         }
@@ -33,18 +33,18 @@
             color: #fff;
         }
     </style>
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-
+    
     <script>
-
+        
         let url = new URL(window.location.href);
-
+        
         fetch('knownspecpoints/readall/' + url.searchParams.get("id")).then(response => response.json()).then(points => {
             
             let specMap = new Map();
             let specIDs = new Map();
-
+            
             for (let point of points) {
                 if (specMap.has(point.section)) {
                     let newArray = specMap.get(point.section);
@@ -60,38 +60,38 @@
                     } else {
                         specIDs.set(point.coursename, new Array({"name": point.section, "parent": point.coursename}));
                     }
-
+                    
                 }
             }
-
+            
             let treeData = [];
-
+            
             for (const [key, value] of specIDs.entries()) {
                 
                 let children = [];
                 for (const singlePoint of value) children.push({"name": singlePoint.name, "parent": singlePoint.coursename, "_children": specMap.get(singlePoint.name)});
-
+                
                 treeData.push({"name": key, "parent": "none", "children": children});
-
+                
             }
-
-            if (treeData.length > 1) {
             
-                for (let item of treeData) item.parent = "Subjects";
-                let subjects = {"name": "Subjects", "parent": "none", "children": treeData};
-
-                treeData = [];
-                treeData.push(subjects);
-
-            }
-
-            console.log(treeData);
-
+            
+            
+            for (let item of treeData) item.parent = "Subjects";
+            let subjects = {"name": "Subjects", "parent": "none", "children": treeData};
+            
+            treeData = [];
+            treeData.push(subjects);
+            
+            
+            
             // ************** Generate the tree diagram	 *****************
-            let margin = {top: -20, right: 50, bottom: 20, left: 200},
+            let margin = {top: -20, right: 50, bottom: 20, left: 100},
             width = window.innerWidth - margin.right - margin.left,
             height = window.innerHeight - margin.top - margin.bottom;
-
+            
+            let textMax = 40;
+            
             let i = 0,
             duration = 750,
             root;
@@ -115,7 +115,7 @@
             update(root);
             
             d3.select(self.frameElement).style("height", "500px");
-
+            
             function update(source) {
                 
                 // Compute the new tree layout.
@@ -123,7 +123,7 @@
                 links = tree.links(nodes);
                 
                 // Normalize for fixed-depth.
-                nodes.forEach(function(d) { d.y = d.depth * window.innerWidth / 10; });
+                nodes.forEach(function(d) { d.y = d.depth * window.innerWidth / 6; });
                 
                 // Update the nodes…
                 let node = svg.selectAll("g.node")
@@ -147,6 +147,54 @@
                 .style("fill-opacity", 1e-6)
                 .style("fill", 'white');
                 
+                // Code below seperates the current text into seperate tspans
+                
+                for (let t of nodeEnter[0]) {
+                    
+                    if (t != null) {
+                        
+                        let node = t.children[1];
+                        let nodeText = node.textContent;
+                        
+                        if (nodeText.length > textMax) {
+                            
+                            let wordArray = nodeText.split(" ");                            
+                            
+                            let lines = [];
+                            let text = "";
+                            
+                            // Puts the words into lines array, splitting them up fairly evenly.
+                            for (let word of wordArray) {
+                                if (text.length < textMax) text += word + " ";
+                                else{
+                                    lines.push(text + word);
+                                    text = "";
+                                }
+                            }
+                            
+                            lines.push(text);
+                            
+                            node.textContent = "";
+                            
+                            let first = true;
+                            
+                            for (let line of lines) {
+                                
+                                let tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+                                tspan.setAttribute("x", "10");
+                                if (!first) tspan.setAttribute("dy", "1.2em");
+                                first = false;
+                                tspan.innerHTML = line;
+                                node.appendChild(tspan);
+                                
+                            }
+                            
+                            
+                        }
+                        
+                    }
+                }
+                
                 // Transition nodes to their new position.
                 let nodeUpdate = node.transition()
                 .duration(duration)
@@ -154,10 +202,11 @@
                 
                 nodeUpdate.select("circle")
                 .attr("r", 10)
-                .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+                .style("fill", function(d) { return d._children ? "#333" : "#666"; });
                 
                 nodeUpdate.select("text")
                 .style("fill-opacity", 1);
+                
                 
                 // Transition exiting nodes to the parent's new position.
                 let nodeExit = node.exit().transition()
@@ -217,9 +266,9 @@
             }
             
         });
-
+        
     </script>
-
+    
     <div class='titleWrapper'>
         <h1 id='title'>Student List</h1>
     </div>
