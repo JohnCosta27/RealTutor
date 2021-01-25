@@ -7,6 +7,8 @@ const app = express();
 const formProcessor = require('express-formidable');
 app.use(formProcessor());
 
+const sha256 = require('js-sha256');
+
 app.use('/', (req, res, next) => {
     console.log("Serving static content: " + req.path);
     next();
@@ -24,11 +26,18 @@ app.use('/students', (req, res, next) => {
 students.post('/create', (req, res) => {
     try {
 
-        let ps = db.prepare("INSERT INTO Students (firstname, surname, email) VALUES (?, ?, ?)");
-        let results = ps.run(req.fields['firstname'], req.fields['surname'], req.fields['email']);
+        let ps = db.prepare("INSERT INTO Students (firstname, surname, email, password, password_salt) VALUES (?, ?, ?, ?, ?)");
 
-        if (results.changes === 1) res.json({status: "OK"});
-        else throw "Unable to create new student";
+        if (safePassword(req.fields['password'])) {
+
+            let password_salt = generateSalt();
+            let hashedPassword = sha256(req.fields['password'] + password_salt);
+            let results = ps.run(req.fields['firstname'], req.fields['surname'], req.fields['email'], hashedPassword, password_salt);
+
+            if (results.changes === 1) res.json({status: "OK"});
+            else throw "Unable to create new student";
+
+        }
         
     } catch (error) {
         console.log("An error occured: " + error);
@@ -295,3 +304,17 @@ lessons.get('/readlesson/:lessonID', (req, res) => {
         res.json({error: "An error occured"});   
     }
 });
+
+function safePassword(password) {
+    if (password.toLowerCase() == password || password.toUpperCase() == password || /\d/.test(password) == false) return false;
+    else return true;
+}
+function generateSalt() {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < 16; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}

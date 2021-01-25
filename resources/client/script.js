@@ -245,6 +245,8 @@ function addStudent() {
     <input id='surname' type='text' class='textbox' name='surname'>
     <label class='labels'>Email</label>
     <input id='email' type='text' class='textbox' name='email'>
+    <label class='labels'>Password</label>
+    <input id='email' type='password' class='textbox' name='password'>
     <label class='labels'>Course</label>
     <select name="specID" class='textbox' id='dropdown' multiple>`
     
